@@ -815,6 +815,163 @@ Adjusted: 9.58 − 0.192 = 9.388
 
 ---
 
+---
+
+## Normalized Scoring Analysis
+
+### Raw Average with Normalized Lowest Score
+
+To account for single catastrophic failures, each model's lowest task score is replaced with its average of the remaining 5 tasks, then the raw average is recalculated. 
+
+```
+Step 1: Identify lowest scoring task
+Step 2: Calculate average of remaining 5 tasks
+Step 3: Replace lowest score with that average
+Step 4: Recalculate raw average from all 6 values
+```
+
+| Model | T1 | T2 | T3 | T4 | T5 | T6 | Lowest Task | Replaced With | **Normalized Raw** |
+|-------|-----|-----|-----|-----|-----|-----|-------------|---------------|-------------------|
+| **Gemini Pro 3 thinking** | 9. 73 | 10.0 | 10.0 | 9.93 | 9. 30* | 10.0 | T5: 9.30 | 9.93 | **9.93** |
+| **Mistral** | 9.88 | 9.75 | 9.30 | 9.56 | 9.20* | 9.76 | T5: 9. 20 | 9.65 | **9.65** |
+| **Ernie 4. 5 Turbo** | 9.4 | 8. 8 | 8.43* | 9.86 | 9.4 | 9. 64 | T3: 8.43 | 9.42 | **9.32** |
+| **GPT-5. 1** | 9.8 | 8.5* | 9.0 | 9. 5 | 9.2 | 8.5 | T2: 8.5 | 9.20 | **9.20** |
+| **DeepSeek V3** | 9.8 | 7.5* | 9.24 | 9.93 | 9.51 | 9.78 | T2: 7.5 | 9. 65 | **9.60** |
+| **Claude Sonnet** | 9.85 | 6.75* | 9.05 | 9.875 | 9.675 | 9.76 | T2: 6.75 | 9.64 | **9. 56** |
+| **Grok 4.1** | 10.0 | 6. 0* | 10.0 | 10.0 | 9.8 | 10. 0 | T2: 6.0 | 9.96 | **9.85** |
+| **Claude Haiku 4.5** | 9. 58 | 6.11* | 9.35 | 9.43 | 9. 95 | 9.73 | T2: 6.11 | 9.61 | **9.51** |
+| **GMT4.6** | 9.54 | 6. 35 | 9.71 | 6.0* | 9.64 | 9. 36 | T4: 6.0 | 8.92 | **8.84** |
+| **Gemini Flash 2.5** | 10. 0 | 9.15 | 2.0* | 10.0 | 10. 0 | 2.0 | T3: 2.0 | 7.79 | **8.16** |
+| **Qwen3-Max** | 6.0* | 6.4 | 9.2 | 9.43 | 7.8 | 8.4 | T1: 6.0 | 8. 25 | **8.25** |
+| **Llama 4** | 9.675 | 6.2 | 7.875 | 8. 5 | 6.0 | 3.5* | T6: 3.5 | 7.65 | **7.53** |
+| **Qwen2.5-Coder-32B** | 9.925 | 5.1 | 6.75 | 3.8* | 9.74 | 6.4 | T4: 3. 8 | 7.58 | **7.47** |
+
+*Asterisk indicates the lowest score that was normalized. 
+
+**Notes:**
+- GPT-5.1 has two tasks tied at 8.5 (T2 and T6); T2 used for normalization. 
+- Gemini Flash 2.5 has two tasks tied at 2.0 (T3 and T6); T3 used, but result is identical either way. 
+
+---
+
+### Impact of Lowest Score Normalization
+
+| Model | Original Raw | Normalized Raw | Change | Interpretation |
+|-------|--------------|----------------|--------|----------------|
+| Gemini Pro 3 thinking | 9.83 | 9.93 | +0.10 | Already consistent; minimal boost |
+| Grok 4.1 | 9.30 | 9. 85 | +0.55 | Syntax error was dragging it down |
+| Mistral | 9.58 | 9.65 | +0.07 | Most consistent; barely changes |
+| DeepSeek V3 | 9.30 | 9.60 | +0.30 | UI failure masked strong performance |
+| Claude Sonnet | 9.16 | 9.56 | +0. 40 | Task 2 failure was an outlier |
+| Claude Haiku 4.5 | 9.02 | 9.51 | +0. 49 | Threading issue hid API excellence |
+| Ernie 4.5 Turbo | 9.19 | 9.32 | +0.13 | Relatively consistent already |
+| GPT-5.1 | 9.08 | 9.20 | +0. 12 | No catastrophic failures |
+| GMT4.6 | 8.43 | 8.84 | +0.41 | Fatal bug was an outlier |
+| Qwen3-Max | 7.87 | 8.25 | +0.38 | NameError was an outlier |
+| Gemini Flash 2.5 | 7.19 | 8.16 | +0.97 | One refusal normalized (still has one) |
+| Llama 4 | 6.96 | 7.53 | +0. 57 | Protocol crash was catastrophic |
+| Qwen2. 5-Coder-32B | 6.95 | 7.47 | +0. 52 | Security nightmare was an outlier |
+
+---
+
+### Final Normalized Score
+
+Combines all three scoring methodologies using a simple average:
+
+```
+Final Normalized Score = (Equal Weighted Adj.  + Backend Weighted Adj. + Normalized Raw) / 3
+```
+
+| Rank | Model | Equal Adj. | Backend Adj. | Normalized Raw | **Final Score** |
+|------|-------|------------|--------------|----------------|-----------------|
+| **1** | **Gemini Pro 3 thinking** | 9.632 | 9.515 | 9.93 | **9.692** |
+| **2** | **Mistral** | 9.388 | 9.278 | 9.65 | **9.439** |
+| **3** | **Grok 4.1** | 8.167 | 8.387 | 9.85 | **8.801** |
+| **4** | **DeepSeek V3** | 8.661 | 8.841 | 9.60 | **9.034** |
+| **5** | **Ernie 4.5 Turbo** | 8.814 | 8.974 | 9.32 | **9.036** |
+| **6** | **Claude Sonnet** | 8. 307 | 8.537 | 9.56 | **8.801** |
+| **7** | **Claude Haiku 4. 5** | 8.009 | 8.309 | 9.51 | **8.609** |
+| **8** | **GPT-5.1** | 8.711 | 8.811 | 9.20 | **8.907** |
+| **9** | **GMT4.6** | 7.200 | 7.000 | 8.84 | **7.680** |
+| **10** | **Gemini Flash 2.5** | 6.934 | 7.582 | 8.16 | **7.559** |
+| **11** | **Qwen3-Max** | 6.873 | 7.363 | 8.25 | **7.495** |
+| **12** | **Llama 4** | 5.425 | 5.625 | 7.53 | **6.193** |
+| **13** | **Qwen2.5-Coder-32B** | 5.226 | 5.166 | 7.47 | **5.954** |
+
+---
+
+### Final Normalized Rankings (Sorted by Score)
+
+| Rank | Model | Final Score | vs.  Equal Rank | Change |
+|------|-------|-------------|----------------|--------|
+| **1** | Gemini Pro 3 thinking | **9.692** | #1 | — |
+| **2** | Mistral | **9.439** | #2 | — |
+| **3** | Ernie 4.5 Turbo | **9.036** | #3 | — |
+| **4** | DeepSeek V3 | **9.034** | #5 | ↑1 |
+| **5** | GPT-5.1 | **8.907** | #4 | ↓1 |
+| **6** | Grok 4.1 | **8.801** | #7 | ↑1 |
+| **7** | Claude Sonnet | **8.801** | #6 | ↓1 |
+| **8** | Claude Haiku 4.5 | **8. 609** | #8 | — |
+| **9** | GMT4.6 | **7. 680** | #9 | — |
+| **10** | Gemini Flash 2.5 | **7.559** | #10 | — |
+| **11** | Qwen3-Max | **7.495** | #11 | — |
+| **12** | Llama 4 | **6.193** | #12 | — |
+| **13** | Qwen2.5-Coder-32B | **5.954** | #13 | — |
+
+**Note:** Grok 4.1 and Claude Sonnet are tied at 8.801.  Grok ranked higher due to superior Normalized Raw (9.85 vs 9. 56).
+
+---
+
+### Key Insights from Final Normalized Scoring
+
+#### **1. Top 3 Remains Rock Solid**
+
+Gemini Pro 3 thinking, Mistral, and Ernie 4.5 Turbo maintain their positions across all methodologies — indicating genuinely robust, reliable performance regardless of how scores are calculated.
+
+#### **2. High-Variance Models Recover**
+
+| Model | Equal Rank | Final Rank | Improvement | Why |
+|-------|------------|------------|-------------|-----|
+| Grok 4.1 | #7 | #6 | ↑1 | Normalized raw (9.85) rewards 4 perfect scores |
+| DeepSeek V3 | #5 | #4 | ↑1 | Strong performance outside Task 2 recognized |
+
+#### **3. Consistency-Advantaged Models Stabilize**
+
+| Model | Equal Rank | Final Rank | Change | Why |
+|-------|------------|------------|--------|-----|
+| Ernie 4.5 Turbo | #3 | #3 | — | Consistency still valued in weighted scores |
+| GPT-5. 1 | #4 | #5 | ↓1 | Others caught up when outliers normalized |
+
+#### **4. The "True Capability" Middle Tier**
+
+Models ranked #4–#8 are separated by only **0.43 points** (9.034 to 8.609), indicating functional equivalence for most use cases:
+
+| Model | Final Score | Primary Strength |
+|-------|-------------|------------------|
+| DeepSeek V3 | 9.034 | Protocols & crypto |
+| GPT-5.1 | 8.907 | General-purpose |
+| Grok 4.1 | 8.801 | Peak performance (when it works) |
+| Claude Sonnet | 8.801 | Text & fundamentals |
+| Claude Haiku 4.5 | 8.609 | REST APIs & speed |
+
+#### **5. Safety Filters Still Hurt**
+
+Gemini Flash 2.5 improves from 7.19 → 8.16 with normalization but still ranks #10 because it has **two** low scores (Tasks 3 and 6), and only one can be normalized.
+
+---
+
+### Updated Recommendation Framework (Final Normalized)
+
+| Need | Model | Final Score | Key Advantage |
+|------|-------|-------------|---------------|
+| Enterprise all-domains | Gemini Pro 3 thinking | 9.692 | Highest overall, most consistent |
+| Default choice | Mistral | 9.439 | No weak spots, reliable |
+| Security-critical | Ernie 4.5 Turbo | 9. 036 | Best Task 4 (9.86) |
+| Backend/API focus | Claude Haiku 4.5 | 8.609 | Best Task 5 (9.95), 10× cheaper |
+| Peak performance | Grok 4.1 | 8.801 | Highest peaks (requires code review) |
+| Budget reasoning | DeepSeek V3 | 9.034 | Strong protocols, good value |
+| Safety-first | Gemini Flash 2.5 | 7.559 | Policy guardrails |
+
 **Document Version:** 3.1 (Corrected: Data consistency, rankings, terminology)
 **Audience:** Technical leads, architects, procurement teams
 **Data Points:** 13 models × 6 tasks × 4 rubric components = 312 data points analyzed
