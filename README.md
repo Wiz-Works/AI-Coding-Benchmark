@@ -190,7 +190,7 @@ Niche/Limited (Tasks 2, 6):       15%  ← Lower applicability or verification c
 | **Llama 4** | 9.675 | 6.2 | 7.875 | 8.5 | 6.0 | 3.5 | **6.96** | 1.535 | **5.425** |
 | **Qwen2.5-Coder-32B** | 9.925 | 5.1 | 6.75 | 3.8 | 9.74 | 6.4 | **6.95** | 1.724 | **5.226** |
 
-*Gemini Flash 2.5: Tasks 3 and 6 refused due to safety filters; scored as 2. 0/10.
+*Gemini Flash 2.5: Tasks 3 and 6 refused due to safety filters; scored as 2/10.
 
 ---
 
@@ -221,8 +221,6 @@ Niche/Limited (Tasks 2, 6):       15%  ← Lower applicability or verification c
 
 ### **🥈 Why Mistral Places 2nd (#2)**
 
-**What's Surprising:** No perfect scores, yet ranks #2 overall.
-
 **Component Breakdown Shows Why:**
 
 | Task | Functionality | Accuracy | Code Quality | Error Handling | Overall |
@@ -238,9 +236,9 @@ Niche/Limited (Tasks 2, 6):       15%  ← Lower applicability or verification c
 
 | Task | Functionality | Accuracy | Code Quality | Error Handling | Overall |
 | --- | --- | --- | --- | --- | --- |
-| **Task 2** | **10.0** | **8.0** | **7.5** | **7.0** | **6.0** |
+| **Task 2** | **2.5** | **8.0** | **7.5** | **7.0** | **6.0** |
 
-Grok's Task 2 has 10.0 functionality (perfect game logic) but fails on code quality due to a syntax error.
+Grok's Task 2 fails on code quality due to a syntax error.
 
 **Verdict:** Consistency in rubric components beats perfect scores. Mistral delivers solid implementations across all domains.
 
@@ -254,23 +252,21 @@ Grok's Task 2 has 10.0 functionality (perfect game logic) but fails on code qual
 
 | Component | Grok 4.1 | Issue |
 | --- | --- | --- |
-| Core Gameplay | 10.0 | Perfect logic ✅ |
+| Core Gameplay | 2.5 | Even if error was fixed, the game was bad. |
 | Controls & Responsiveness | 8.0 | Works |
-| Code Quality | 7.5 | Clean design |
-| Rendering & UX | 7.0 | Looks good |
+| Code Quality | 7.5 | Not portable |
+| Rendering & UX | 7.0 | With potential yet malformated |
 | **Overall** | **6.0** | **❌ Syntax error: ` WIDTH // // 2'** |
 
 **Root Cause:** Typo — double floor division operator (// //) in the reset() function. Code does not run
 
-**Severity:** CRITICAL — prevents execution entirely. This is worse than architectural issues like Haiku's threading problem, which at least produces runnable code.
+**Severity:** CRITICAL — prevents execution entirely. This is worse than just architectural issues like Haiku's threading problem, which at least produces runnable code.
 
 **Variance Impact:**
 
 - Scores: [10.0, 6.0, 10.0, 10.0, 9.8, 10.0]
 - StdDev: 1.619 (highest among top-10 models)
 - Penalty: 1.133 points
-
-**Verdict:** Grok exhibits "careless perfection" — brilliant implementations with typo-induced failures. Not production-ready without mandatory code review.
 
 ---
 
@@ -304,7 +300,7 @@ Grok's Task 2 has 10.0 functionality (perfect game logic) but fails on code qual
 - Haiku's strength (Task 5: 9.95) is amplified
 - Haiku's weakness (Task 2: 6.11) is minimized
 
-**Verdict:** Haiku is a **REST API specialist** — genuinely excellent on structured problems, struggles with real-time state management. Also 10× cheaper than Gemini Pro 3.
+**Verdict:** Haiku is genuinely excellent on structured problems. While it struggles with real-time state management. Its also 10× cheaper than Gemini Pro 3.
 
 ---
 
@@ -365,10 +361,10 @@ def create_note(content):
 # What GMT4.6 does:
 def create_note(content):
     encrypted_content = _decrypt_note(content)  # ❌ Wrong function
-    # Crashes: cannot decrypt plaintext
+    # cannot decrypt plaintext
 ```
 
-**Verdict:** Backend specialist with a show-stopper bug. Like having a car with excellent suspension but no engine.
+**Verdict:** While it is a "dumb" bug with an easy fix. It effectively prevents ther application from working.
 
 ---
 
@@ -407,18 +403,18 @@ def create_note(content):
 | GPT-5.1 | 10.0 | 9. 0 | 8.5 | 9.0 | **8.5** | ✅ Playable |
 | DeepSeek V3 | 9.0 | 8.0 | 8.5 | 7.5 | **7.5** | ❌ Field misformatted |
 | Claude Sonnet | 10.0 | 8.0 | 8.5 | 8.5 | **6.75** | ❌ Broken input handling (threading) |
-| Qwen3-Max | 9.0 | 7.5 | 7.0 | 7.0 | **6.4** | ❌ Malformed rendering |
+| Qwen3-Max | 9.0 | 7.5 | 7.0 | 7.0 | **6.4** | ❌ Malformed rendering, Broken input |
 | GMT4.6 | 6.0 | 5.0 | 9.5 | 5.5 | **6.35** | ❌ Terminal I/O architecture failure |
-| Llama 4 | 10.0 | 8.5 | 8.0 | 8.0 | **6.2** | ❌ Missing keyboard library |
+| Llama 4 | 10.0 | 8.5 | 8.0 | 8.0 | **6.2** | ❌ Required dependencies. Not portable. |
 | Claude Haiku 4.5 | 10.0 | 7.0 | 8.85 | 8.5 | **6.11** | ❌ Threading + blocking I/O conflict |
-| Grok 4.1 | 10.0 | 8.0 | 7.5 | 7.0 | **6.0** | ❌ **Syntax error: ` WIDTH // // 2`** |
+| Grok 4.1 | 2.5 | 8.0 | 7.5 | 7.0 | **6.0** | ❌ **Syntax error: ` WIDTH // // 2`** Malformed rendering |
 | **Qwen2.5-Coder-32B** | 10.0 | 0.0 | 4.0 | 4.0 | **5.1** | ❌ **Syntax error: invalid conditional import** |
 
 **Key Insight:** Task 2 is the **frontier weakness**. Even top-5 models struggle because real-time event-driven state management is underrepresented in training data.
 
 **Failure Patterns:**
 
-- **Architectural failures** (Haiku, Sonnet, GMT4.6): Threading/blocking I/O mismatches
+- **Architectural failures** (Haiku, Sonnet, GMT4.6, Grok): Threading/blocking I/O mismatches
 - **Syntax errors** (Grok, Qwen2.5): Typos prevent execution
 - **UI failures** (DeepSeek): Rendering logic breaks
 
@@ -450,7 +446,7 @@ def create_note(content):
 | --- | --- | --- | --- | --- | --- | --- |
 | Grok 4.1 | 10.0 | 10. 0 | 10.0 | 10.0 | **10.0** | ✅ Perfect |
 | Gemini Flash 2.5 | 10.0 | 10.0 | 10.0 | 10.0 | **10.0** | ✅ Perfect |
-| Gemini Pro 3 thinking | 10.0 | 9.75 | 10.0 | 10.0 | **9.93** | ✅ Industry-grade (600k PBKDF2) |
+| Gemini Pro 3 thinking | 10.0 | 9.75 | 10.0 | 10.0 | **9.93** | ✅ Exceptional |
 | DeepSeek V3 | 10.0 | 9. 75 | 10.0 | 10.0 | **9.93** | ✅ Exceptional |
 | Claude Sonnet | 10.0 | 9.0 | 9.5 | 9.5 | **9.875** | ✅ Industry standard |
 | Ernie 4.5 Turbo | 10.0 | 9.75 | 9.75 | 10.0 | **9.86** | ✅ Near-perfect |
@@ -844,7 +840,7 @@ Both evaluators assessed the same components from different perspectives:
 | **Code Quality** | Is architecture sound? Any syntax errors? | N/A (code-only) |
 | **Rendering & UX** | Does rendering logic execute? | Is it clear, readable, enjoyable to look at? |
 
-**Why Both? **
+**Why Both**
 
 - AI catches technical failures (syntax errors, broken logic)
 - Human catches experiential failures (laggy feel, confusing visuals, frustrating gameplay)
@@ -886,7 +882,7 @@ Both evaluators assessed the same components from different perspectives:
 
 ### **Task 6 Rubric Components**
 
-**Verification Limitation:** Since no physical Arduino + NAND hardware was available, evaluation was based on **code review against ONFI specifications**, not functional hardware verification.
+**Verification Limitation:** This test only evaluates if the models would attempt to incorporate ONFI compliant arduino code that would compile and attempted to achieve the requested funtionabilities. Evaluation was based on, compilation on the Arduino IDE and **code review against ONFI specifications**, not functional hardware verification. The point of this test was more to see if the models would be able to write something that compiles without having thousands of examples, out in the wild. Demostrating how well the model can use glue and ductape to fill the gaps in its training data.
 
 | Component | What We Checked | What We Couldn't Check |
 | --- | --- | --- |
@@ -1099,7 +1095,537 @@ Gemini Flash 2.5 improves from 7.19 → 8.16 with normalization but still ranks 
 | Budget reasoning | DeepSeek V3 | 9.034 | Strong protocols, good value |
 | Safety-first | Gemini Flash 2.5 | 7.559 | Policy guardrails |
 
-**Document Version:** 3.1 (Corrected: Data consistency, rankings, terminology)
-**Audience:** Technical leads, architects, procurement teams
-**Data Points:** 13 models × 6 tasks × 4 rubric components = 312 data points analyzed
-**Key Innovation:** Root cause taxonomy (typos vs. architecture vs. policy vs. capability gaps)
+---
+
+## Evaluation Process Overview
+
+### Two-Layer Evaluation System
+
+Each task was evaluated using a combination of AI analysis and human verification:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    MODEL GENERATES CODE                     │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                 AI EVALUATOR (Claude)                       │
+│  • Analyzes code structure                                  │
+│  • Checks rubric compliance                                 │
+│  • Scores each component (Functionality, Accuracy, etc.)    │
+│  • Identifies red flags                                     │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                 HUMAN VERIFICATION                          │
+│  • Confirms code actually runs                              │
+│  • Validates AI observations are accurate                   │
+│  • Task 2 only: Scores gameplay feel (40% of Task 2 score)  │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    FINAL SCORE                              │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Evaluation Timeline
+
+- **Models tested:** 13 total
+- **Tasks per model:** 6
+- **Total evaluations:** 78 (13 × 6)
+- **Data points:** 312 (78 evaluations × 4 rubric components average)
+
+---
+
+## AI vs Human Evaluation Roles
+
+### Summary Table
+
+| Task | AI Evaluator Role | Human Role | Human Contribution to Score |
+| --- | --- | --- | --- |
+| **Task 1** | Scored all components | Verified code runs; confirmed AI observations | 0% (verification only) |
+| **Task 2** | 60% of score (code/architecture) | 40% of score (gameplay feel) + verification | **40%** |
+| **Task 3** | Scored all components | Verified code runs; confirmed AI observations | 0% (verification only) |
+| **Task 4** | Scored all components | Verified code runs; confirmed AI observations | 0% (verification only) |
+| **Task 5** | Scored all components | Verified code runs; confirmed AI observations | 0% (verification only) |
+| **Task 6** | Scored all components | Verified code compiles; confirmed AI observations | 0% (verification only) |
+
+### Why Task 2 Has Human Scoring (40%)
+
+Games are inherently experiential. Code that "works" technically may still:
+
+- Feel laggy or unresponsive
+- Have confusing or unclear visuals
+- Be frustrating to play despite correct logic
+
+**What AI evaluates (60%):**
+
+- Does collision detection code work?
+- Is the architecture sound?
+- Are there syntax errors?
+- Is the game loop structured correctly?
+
+**What Human evaluates (40%):**
+
+- Does the game *feel* responsive?
+- Is it *enjoyable* to play?
+- Are the visuals *clear* and *intuitive*?
+- Would a real user be satisfied?
+
+### Human Verification Process (Tasks 1, 3, 4, 5)
+
+For non-game tasks, the human evaluator:
+
+1. **Attempted to run the code** — Did it execute without errors?
+2. **Tested basic functionality** — Did the core features work?
+3. **Cross-referenced AI observations** — Were the AI's claims accurate?
+4. **Did NOT independently score** — Deferred to AI evaluation for final scores
+
+If discrepancies were found between AI observations and actual behavior, scores were adjusted accordingly.
+
+---
+
+## Task-Specific Evaluation Details
+
+### Task 1: Word Counter & Text Analyzer
+
+**What AI Evaluated:**
+
+- Functionality (40%): All required metrics calculated?
+- Accuracy (35%): Calculations correct against manual verification?
+- Code Quality (15%): Clean structure, good naming, comments?
+- Error Handling (10%): Graceful failures, meaningful messages?
+
+**What Human Verified:**
+
+- Code runs without errors
+- Output matches expected format
+- Test files produce results matching the prompt/AI evaluator
+
+**Verification Method:** Ran against sample text files with known word counts.
+
+---
+
+### Task 2: Snake Game CLI
+
+**What AI Evaluated (60%):**
+
+- Core Gameplay (35%): Collision detection, scoring, win/lose conditions
+- Code Quality (20%): Architecture, function separation, comments
+- Part of Controls (5%): Input handling code structure
+
+**What Human Evaluated (40%):**
+
+- Controls & Responsiveness (20%): Does it *feel* responsive?
+- Rendering & UX (20%): Is it visually clear and enjoyable?
+
+**Verification Method:** Actually played each game for 2-5 minutes, testing:
+
+- Direction changes (all 4 directions)
+- Collision with walls
+- Collision with self
+- Food eating and snake growth
+- Score incrementing
+- Game over state
+
+**Why Human Evaluation Was Critical:**
+Several models produced code that was technically correct but unplayable:
+
+- **Claude Haiku:** Threading + blocking I/O conflict made controls unresponsive
+- **Claude Sonnet:** Input handling broken despite correct game logic
+- **Grok 4. 1:** Syntax error (`// //`) prevented execution entirely
+- **GMT4. 6:** Terminal I/O architecture failure
+
+AI could identify these issues in code review, but human playtesting confirmed severity.
+
+---
+
+### Task 3: Code Obfuscation & Encryption
+
+**What AI Evaluated:**
+
+- Obfuscation Quality (30%): Variables/functions renamed? Comments removed?
+- Encryption Implementation (30%): Real encryption? PBKDF2? Unique salt?
+- Pipeline & Execution (25%): Full workflow works end-to-end?
+- Code Quality (15%): Clean separation of concerns?
+
+**What Human Verified:**
+
+- Obfuscation tool runs on sample Python file
+- Encrypted output is generated
+- Wrapper executes with correct password
+- Wrong password fails gracefully
+
+**Key Evaluation Criteria for Encryption:**
+
+| Criterion | Acceptable | Not Acceptable |
+| --- | --- | --- |
+| Encryption library | Fernet, AES, ChaCha20 | Base64, XOR, ROT13 |
+| Key derivation | PBKDF2, bcrypt, Argon2, scrypt | Hardcoded keys, no derivation |
+| Salt | Unique per encryption, randomly generated | Same salt, no salt |
+| Iterations (PBKDF2) | 100k+ acceptable, 600k+ ideal | <10k |
+
+---
+
+### Task 4: Secure Note-Taking Application
+
+**What AI Evaluated:**
+
+- Encryption & Crypto (30%): Real encryption, proper key derivation, unique salt
+- Security Best Practices (30%): Input validation, no hardcoded secrets, logging
+- Code Quality & Structure (25%): Separation of concerns, documentation
+- Functionality (15%): All CRUD operations work
+
+**What Human Verified:**
+
+- Application runs and presents menu
+- Can create, view, update, delete notes
+- Encryption/decryption flow works
+- Wrong password handled gracefully
+
+**PBKDF2 Iteration Standards Used:**
+
+| Iteration Count | Rating | Score Impact |
+| --- | --- | --- |
+| 600k+ | Industry standard | Full marks |
+| 100k-600k | Acceptable | Minor deduction |
+| 10k-100k | Suboptimal | Moderate deduction |
+| <10k | Weak | Significant deduction |
+
+---
+
+### Task 5: RESTful API with JWT Authentication
+
+**What AI Evaluated:**
+
+- Authentication & JWT (30%): Token generation, validation, expiration
+- API Design & Endpoints (25%): Correct HTTP methods, status codes, structure
+- Database & Data (25%): Schema design, relationships, password hashing
+- Security & Best Practices (20%): Env vars, validation, logging
+
+**What Human Verified:**
+
+- Code structure is complete
+- Database models defined
+- JWT flow is logical
+- Endpoints are properly structured
+
+**Note:** API was not live-tested (no server environment). Evaluation based on code review.
+
+---
+
+### Task 6: Arduino NAND Flash Controller
+
+**What AI Evaluated:**
+
+- Protocol Correctness (35%): ONFI command codes correct? Sequences logical?
+- Implementation Quality (35%): GPIO setup, data bus handling, control signals
+- Code Structure (20%): Function organization, comments, clarity
+- Error Handling (10%): R/B signal handling, timeouts, error detection
+
+**What Human Verified:**
+
+- Code compiles (syntax check)
+- ONFI command codes match specification
+- Logical flow makes sense
+
+**Critical Limitation:**
+
+> **No physical hardware was available for testing.**
+> 
+> Evaluation assessed whether code *would plausibly function* on real hardware based on:
+> 
+> - Correct ONFI command codes (0x90 READ ID, 0x00/0x30 READ PAGE, 0x60 ERASE)
+> - Logical timing sequences
+> - Proper state machine flow
+> - Presence of error handling
+> 
+> **Actual hardware behavior could not be verified.**
+
+**ONFI Command Codes Used for Verification:**
+
+| Command | Code | What It Does |
+| --- | --- | --- |
+| READ ID | 0x90 | Read manufacturer/device ID |
+| READ PAGE | 0x00 | Start read operation |
+| READ PAGE (Confirm) | 0x30 | Confirm and execute read |
+| BLOCK ERASE | 0x60 | Erase a block |
+| ERASE (Confirm) | 0xD0 | Confirm erase operation |
+| READ STATUS | 0x70 | Get device status |
+
+---
+
+## Scoring Rubrics (Full Detail)
+
+### Component Weight Distribution by Task
+
+| Task | Component 1 | Component 2 | Component 3 | Component 4 |
+| --- | --- | --- | --- | --- |
+| **Task 1** | Functionality (40%) | Accuracy (35%) | Code Quality (15%) | Error Handling (10%) |
+| **Task 2** | Core Gameplay (35%) | Controls (25%) | Code Quality (20%) | Rendering/UX (20%) |
+| **Task 3** | Obfuscation (30%) | Encryption (30%) | Pipeline (25%) | Code Quality (15%) |
+| **Task 4** | Encryption (30%) | Best Practices (30%) | Code Quality (25%) | Functionality (15%) |
+| **Task 5** | Auth/JWT (30%) | API Design (25%) | Database (25%) | Security (20%) |
+| **Task 6** | Protocol (35%) | Implementation (35%) | Code Structure (20%) | Error Handling (10%) |
+
+### Score Calculation Formula
+
+For each task:
+
+```
+Task Score = Σ (Component Score × Component Weight)
+```
+
+For global average:
+
+```
+Global Average = (Task1 + Task2 + Task3 + Task4 + Task5 + Task6) / 6
+```
+
+For consistency penalty:
+
+```
+StdDev = Standard Deviation of [Task1, Task2, Task3, Task4, Task5, Task6]
+Penalty = StdDev × 0.7
+Adjusted Score = Global Average - Penalty
+```
+
+---
+
+## Weighting Rationale
+
+### Equal Weighting (Primary Ranking)
+
+Each task = 16.67% of total score.
+
+**Use case:** Enterprise environments where all domains matter equally.
+
+### Backend-Prioritized Weighting (Alternative Ranking)
+
+| Task | Weight | Rationale |
+| --- | --- | --- |
+| **Task 1** (Word Counter) | 10% | Very simple; doesn't differentiate capable models (12/13 scored 9. 4+) |
+| **Task 2** (Snake Game) | 10% | Limited applicability; real-time CLI games are niche, don't apply to most work environments |
+| **Task 3** (Obfuscation) | 20% | Mixed relevance; encryption/key derivation are enterprise-relevant, code obfuscation itself is niche (DRM, proprietary protection) |
+| **Task 4** (Secure Notes) | 25% | Enterprise security standard; per-note encryption, PBKDF2, file permissions, audit logging are common requirements |
+| **Task 5** (REST API) | 30% | Core enterprise skill; JWT, databases, API design represent the most common enterprise development work |
+| **Task 6** (Arduino NAND) | 5%  | Verification limitations; complex but unverifiable without hardware — code might run but correctness unknown |
+
+### Weighting Principle
+
+```
+Weight = Real-World Applicability × Verification Confidence
+```
+
+- **High applicability + High verification confidence** = High weight (Task 5: 30%)
+- **High applicability + High verification confidence** = High weight (Task 4: 25%)
+- **Mixed applicability** = Moderate weight (Task 3: 20%)
+- **Low applicability** = Low weight (Task 2: 10%)
+- **High complexity + Low verification confidence** = Low weight (Task 6: 5%)
+
+---
+
+## Known Limitations
+
+### What This Benchmark Can Evaluate
+
+✅ Code correctness (syntax, logic, structure)
+✅ Algorithm implementation (calculations, data structures)
+✅ Security practices (encryption, hashing, validation)
+✅ Code organization (functions, comments, naming)
+✅ Error handling (graceful failures, meaningful messages)
+✅ Gameplay feel (Task 2 only, via human testing)
+✅ Protocol compliance (Task 6, against ONFI specification)
+
+### What This Benchmark Cannot Evaluate
+
+❌ **Performance:** No measurement of execution speed, memory usage, or scalability
+❌ **Hardware interaction:** Task 6 code not tested on real Arduino/NAND
+
+### Task-Specific Limitations
+
+| Task | Limitation |
+| --- | --- |
+| Task 1 | Not tested with very large files (>1MB) |
+| Task 2 | Not tested on non-standard terminals |
+| Task 3 | Cannot verify resistance to determined reverse engineering |
+| Task 4 | Cannot verify actual file permissions on user's system |
+| Task 5 | No live HTTP request testing |
+| Task 6 | **No hardware verification** — plausibility-based scoring only |
+
+---
+
+## Red Flags & Score Ceilings
+
+Pre-defined automatic score penalties were applied for critical failures:
+
+### Task 1: Word Counter
+
+| Red Flag | Maximum Score |
+| --- | --- |
+| Word count is wrong | 6/10 |
+| Unique word count incorrect | 6/10 |
+| Average word length calculation wrong | 6/10 |
+| Longest/shortest word incorrect | 7/10 |
+| Crashes on missing file | 5/10 |
+| No error handling at all | 6/10 |
+| Output unformatted or hard to read | 6/10 |
+
+### Task 2: Snake Game
+
+| Red Flag | Maximum Score |
+| --- | --- |
+| Snake passes through itself | 8/10 |
+| Food doesn't spawn or disappear inconsistently | 7/10 |
+| Score doesn't increment | 8/10 |
+| Significant input lag | 7/10 |
+| Game doesn't run without external GUI libraries | 6/10 |
+| No collision detection at all | 7/10 |
+| Crashes during gameplay | 6/10 |
+
+### Task 3: Obfuscation & Encryption
+
+| Red Flag | Maximum Score |
+| --- | --- |
+| Base64 encoding as "encryption" | **3/10** |
+| Hardcoded encryption keys | 5/10 |
+| No password-based key derivation | 6/10 |
+| Obfuscated code doesn't run | 4/10 |
+| No actual encryption, just obfuscation | 6/10 |
+| Wrapper doesn't execute decrypted code | 5/10 |
+| Same salt for all encryptions | 7/10 |
+| Refuses task due to safety concerns | **2/10** |
+
+### Task 4: Secure Notes
+
+| Red Flag | Maximum Score |
+| --- | --- |
+| Hardcoded passwords/keys anywhere | 6/10 |
+| Plaintext password logging | 6/10 |
+| No password-based key derivation | 5/10 |
+| Same salt for all notes | 7/10 |
+| Base64 as encryption | **3/10** |
+| No validation (accepts any input) | 6/10 |
+| No error handling (crashes on wrong password) | 6/10 |
+
+### Task 5: REST API
+
+| Red Flag | Maximum Score |
+| --- | --- |
+| Hardcoded JWT_SECRET in code | 6/10 |
+| Plaintext passwords (no hashing) | **5/10** |
+| MD5 for password hashing | 5/10 |
+| No token validation on protected routes | 6/10 |
+| No input validation | 6/10 |
+| Same secret/key for all users | 7/10 |
+| Accepts any token or skips signature check | 4/10 |
+| No database or all data in memory | 5/10 |
+
+### Task 6: Arduino NAND
+
+| Red Flag | Score Impact |
+| --- | --- |
+| Wrong ONFI command codes | Significant deduction |
+| No R/B signal handling | Moderate deduction |
+| Pseudocode instead of real code | Major deduction |
+| No error handling or timeouts | Moderate deduction |
+| Refuses task | Maximum 2/10 |
+
+---
+
+## Difficulty Calibration
+
+### Original Estimates vs Actual Results
+
+| Task | Estimated Difficulty | Actual Difficulty | Pass Rate (≥8. 0) | Notes |
+| --- | --- | --- | --- | --- |
+| Task 1 | 3.5/10 (Easy) | ~3/10 | 12/13 (92%) | As expected; only Qwen3-Max failed |
+| Task 2 | 4.5/10 (Easy-Medium) | **~7/10** | 5/13 (38%) | **Underestimated**; threading/terminal I/O is frontier weakness |
+| Task 3 | 5.5/10 (Medium) | ~5. 5/10 | 9/13 (69%) | Matched; one refusal (Gemini Flash) |
+| Task 4 | 5.5/10 (Medium) | ~6/10 | 10/13 (77%) | Slightly harder; 2 catastrophic failures |
+| Task 5 | 7.5/10 (Hard) | **~5/10** | 11/13 (85%) | **Overestimated**; most models scored 9+ |
+| Task 6 | 9/10 (Very Hard) | 10/10 | 9/13 (69%) | Verification limited; |
+
+### Key Insight: Task 2 Is the Differentiator
+
+Task 2 (Snake Game) had the **lowest pass rate** despite being rated "Easy-Medium."
+
+**Why models struggled:**
+
+- Real-time terminal I/O patterns are rare in training data
+- Threading + blocking I/O is a common architectural mistake
+- Non-blocking input handling requires specific knowledge (`select`, `poll`, `kbhit`)
+- Most async patterns in training data are web/API focused, not terminal-based
+
+**Models that passed Task 2 (≥8.0):**
+
+- Gemini Pro 3 thinking (10. 0)
+- Mistral (9.75)
+- Gemini Flash 2. 5 (9.15)
+- Ernie 4.5 Turbo (8.8)
+- GPT-5. 1 (8.5)
+
+**Models that failed Task 2 (<7.0):**
+
+- Claude Sonnet (6.75) — Broken input handling
+- Qwen3-Max (6.4) — Malformed rendering
+- GMT4.6 (6.35) — Terminal I/O architecture failure
+- Llama 4 (6.2) — Missing keyboard library
+- Claude Haiku 4. 5 (6.11) — Threading + blocking I/O conflict
+- Grok 4.1 (6.0) — Syntax error (`// //`)
+- Qwen2.5-Coder-32B (5.1) — Syntax error
+
+---
+
+## Data Integrity Notes
+
+### Single Evaluation Run
+
+Each model was tested **once** per task. No cherry-picking of results.
+
+### Prompt Consistency
+
+All 13 models received identical prompts for each task (after Task 3 refinement).
+
+### Evaluator Consistency
+
+- **AI Evaluator:** Claude (same model for all evaluations)
+- **Human Verifier:** Single human evaluator for consistency
+
+### Score Calculation Verification
+
+All calculations were verified:
+
+- Global averages computed from raw task scores
+- Standard deviations calculated using population formula
+- Consistency penalties applied uniformly (StdDev × 0.7)
+- Weighted scores computed with documented weights
+
+### Raw Data Availability
+
+Complete per-component scores are available in the supplementary data file (`ai_model_benchmark_scores2.md`).
+
+---
+
+## Appendix: Models Tested
+
+| Model | Provider | Type | Notes |
+| --- | --- | --- | --- |
+| Gemini Pro 3 thinking | Google | Reasoning | #1 ranked |
+| Mistral | Mistral AI | General | #2 ranked |
+| Ernie 4.5 Turbo | Baidu | General | #3 ranked |
+| GPT-5. 1 | OpenAI | General |     |
+| DeepSeek V3 | DeepSeek | Reasoning |     |
+| Claude Sonnet | Anthropic | General |     |
+| Grok 4.1 | xAI | General |     |
+| Claude Haiku 4.5 | Anthropic | Fast |     |
+| GMT4.6 | Unknown | General |     |
+| Gemini Flash 2.5 | Google | Fast | Safety filter refusals |
+| Qwen3-Max | Alibaba | General |     |
+| Llama 4 | Meta | Open Source |     |
+| Qwen2.5-Coder-32B | Alibaba | Coding | Locally hosted (Q3_K_M) |
+
+---
