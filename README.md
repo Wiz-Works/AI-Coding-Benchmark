@@ -1,4 +1,4 @@
-# AI Coding Model Benchmark Analysis (Unified)
+# AI Coding Model Benchmark Analysis
 
 **December 2025 | 17 Models | 6 Tasks | Threshold-Based Consistency Penalty**
 
